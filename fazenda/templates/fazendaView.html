@@ -1,0 +1,96 @@
+{% extends "base-sidenav.html" %}
+{% load static %}
+
+{% block title %}
+Fazenda
+{% endblock title %}
+    
+{% block head %}
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.min.css" />
+{% endblock head %}
+        
+   
+{% block content %}
+            
+<main>
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">Fazenda</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Fazenda</li>
+        </ol>
+
+        <div class="row mb-4">
+            <div class="col-4">
+                <a class="btn btn-primary" href="{% url 'fazendaCreate' %}" >Adicionar Fazenda</a>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-table me-1"></i>
+                Fazendas
+            </div>
+            <div class="card-body">
+                {% if fazendas %}
+                <table id="datatable" class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Inscrição</th>
+                            <th>Proprietario</th>
+                            <th>Endereço</th>
+                            <th>Opção</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Inscrição</th>
+                            <th>Proprietario</th>
+                            <th>Endereço</th>
+                            <th>Opção</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        {% for fazenda in fazendas %}
+                        <tr>
+                            <td>{{fazenda.nome}}</td>
+                            <td>{{fazenda.inscricao_estadual}}</td>
+                            <td>{{fazenda.proprietario}}</td>
+                            <td>{{fazenda.endereco}}</td>
+                            <td>
+                                <a class="btn btn-warning mx-4" href="{% url 'fazendaUpdate' fazenda.id %}" ><i class="fa-solid fa-pen"></i></a>
+                                <a class="btn btn-danger" href="{% url 'fazendaDelete' fazenda.id %}"><i class="fa-solid fa-trash"></i></a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                       
+                    </tbody>
+                </table>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock content %}
+
+
+{% block script %} 
+
+
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="https://cdn.datatables.net/2.0.8/js/dataTables.min.js"></script>
+
+
+<script>
+    new DataTable('#datatable',{
+        responsive: true
+    });
+</script>
+    
+{% endblock script %}   
+    
+
+
+               

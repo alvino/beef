@@ -1,0 +1,129 @@
+{% extends "base-sidenav.html" %}
+{% load static %}
+
+{% block title %}
+Morte
+{% endblock title %}
+    
+{% block head %}
+
+   {% include 'partials/css/link_datatable_buttons.html' %}
+
+{% endblock head %}
+        
+   
+{% block content %}
+            
+<main>
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">Morte</h1>
+       
+        
+        <div class="row my-4">
+            <div class="col-4">
+                <a class="btn btn-primary" href="{% url 'mortoCreate' %}" >Cadastra Morte</a>
+            </div>
+        </div>
+        
+        <div class="row">
+            {% if animais %}
+            <table id="datatable" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Brinco</th>
+                        <th>Nome</th>
+                        <th>Sexo</th>
+                        <th>Mãe</th>
+                        <th>Pai</th>
+                        <th>Morreu</th>
+                        <th>#</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th scope="col">Brinco</th>
+                        <th>Nome</th>
+                        <th>Sexo</th>
+                        <th>Mãe</th>
+                        <th>Pai</th>
+                        <th>Morreu</th>
+                        <th >#</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    {% for animal in animais %}
+                    <tr class="pointer" >
+                        <td scope="row">{{animal.brinco}}</td>
+                        <td>{{animal.nome}}</td>
+                        <td>{{animal.sexo}}</td>
+                        <td>{{animal.mae}}</td>
+                        <td>{{animal.pai}}</td>
+                        <td>{{animal.data_change_status| date:'d/m/Y' }}</td>
+                        <td>
+                            <button type="button" class="btn btn-outline-secondary" 
+                            onclick="window.location='{% url 'animalUpdate' animal.id %}';">Selecinar</button>
+                            {% comment %} <button type="button" class="btn btn-outline-danger" 
+                            onclick="window.location='{% url 'mortoDelete' animal.id %}';">Remover</button> {% endcomment %}
+                            <!-- Button trigger modal -->
+                            <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal{{animal.id}}">Deletar</button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal{{animal.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Confirmar Remoção</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                    Confirmar exclução do lote <small class="text-muted h6">{% firstof animal.brinco animal.nome %}</small>?
+                                    </div>
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <a type="button" class="btn btn-danger" href="{% url 'mortoDelete' animal.id %}">Deletar</a>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        </td>
+                        
+                    </tr>
+                    {% endfor %}
+                    
+                </tbody>
+            </table>
+            {% else %}
+                <div class="alert alert-info my-4" role="alert">
+                    Não tem dados na tabela.
+                </div>
+            {% endif %}
+            
+        </div>
+    </div>
+</main>
+{% endblock content %}
+
+
+{% block script %} 
+
+{% include "partials/js/script_datatable_buttons.html" %}
+
+<script>
+    new DataTable('#datatable',{
+        select: true,
+        responsive: true,
+        layout: {
+            topStart: {
+
+                buttons: ['pageLength','print', 'excel','csvHtml5']
+             
+            }
+        }
+    });
+</script>
+    
+{% endblock script %}   
+    
+
+
+               

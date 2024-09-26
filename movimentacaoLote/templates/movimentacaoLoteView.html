@@ -1,0 +1,103 @@
+{% extends "base-sidenav.html" %}
+{% load static %}
+
+{% block title %}
+Movimentação Lote
+{% endblock title %}
+    
+{% block head %}
+
+   {% include 'partials/css/link_datatable_buttons.html' %}
+
+{% endblock head %}
+        
+   
+{% block content %}
+            
+<main>
+    <div class="container-fluid px-4">
+        <div class="row my-4">
+
+            <h1 class="">Movimentação Lote</h1>
+            <a href="javascript:history.back()" >
+                <i class="fa-solid fa-arrow-left"></i> Voltar
+            </a>
+        </div>
+        
+        
+        
+        <div class="row">
+           
+                {% if lotes %}
+                <table id="datatable" class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Lote</th>
+                            <th>quantidade de animais</th>
+                            <th>Data</th>
+                            <th>#</th>
+                            {% comment %} <th>Opção</th> {% endcomment %}
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Pasto</th>
+                            <th>Lote</th>
+                            <th>Data</th>
+                            <th>#</th>
+                            {% comment %} <th>Opção</th> {% endcomment %}
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        {% for lote in lotes %}
+                        <tr>
+                            <td>{{lote.nome}}</td>
+                            <td>{{lote.animal_set.count}}</td>
+                            <td></td>
+                            <td>
+                                <button type="button" class="btn btn-outline-secondary" 
+                                    onclick="window.location='{% url 'movimentacaoLoteUpdate' lote.id %}';">
+                                    Selecinar
+                                </button>
+                            </td>
+                        </tr>
+
+                        {% endfor %}
+                       
+                    </tbody>
+                </table>
+                {% else %}
+                    <div class="alert alert-info my-4" role="alert">
+                        Não tem dados na tabela.
+                    </div>
+                {% endif %}
+            
+        </div>
+    </div>
+</main>
+{% endblock content %}
+
+
+{% block script %} 
+
+{% include "partials/js/script_datatable_buttons.html" %}
+
+<script>
+    new DataTable('#datatable',{
+        select: true,
+        responsive: true,
+        layout: {
+            topStart: {
+
+                buttons: ['pageLength','print', 'excel','csvHtml5']
+             
+            }
+        }
+    });
+</script>
+    
+{% endblock script %}   
+    
+
+
+               

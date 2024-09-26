@@ -1,0 +1,41 @@
+
+def animal_tabela_meses(animais):
+    animais_femeas = list(filter(lambda animal: animal.sexo == 'F', animais))
+    animais_machos = list(filter(lambda animal: animal.sexo == 'M', animais))
+
+    categoria = {}
+    categoria['femea_r']  = len(list(filter(lambda animal: animal.get_meses == 0, animais_femeas)))
+    categoria['femea_1']  = len(list(filter(lambda animal: animal.get_meses == 1, animais_femeas)))
+    categoria['femea_2']  = len(list(filter(lambda animal: animal.get_meses == 2, animais_femeas)))
+    categoria['femea_3']  = len(list(filter(lambda animal: animal.get_meses == 3, animais_femeas)))
+    categoria['femea_4']  = len(list(filter(lambda animal: animal.get_meses == 4, animais_femeas)))
+    categoria['femea_5']  = len(list(filter(lambda animal: animal.get_meses == 5, animais_femeas)))
+    categoria['femea_6']  = len(list(filter(lambda animal: animal.get_meses == 6, animais_femeas)))
+    categoria['femea_7']  = len(list(filter(lambda animal: animal.get_meses == 7, animais_femeas)))
+    categoria['femea_8']  = len(list(filter(lambda animal: animal.get_meses == 8, animais_femeas)))
+    categoria['femea_9']  = len(list(filter(lambda animal: animal.get_meses == 9, animais_femeas)))
+    categoria['femea_10'] = len(list(filter(lambda animal: animal.get_meses == 10, animais_femeas)))
+    categoria['femea_11'] = len(list(filter(lambda animal: animal.get_meses == 11, animais_femeas)))
+    categoria['femea_12'] = len(list(filter(lambda animal: animal.get_meses == 12, animais_femeas)))
+    categoria['femea_24'] = len(list(filter(lambda animal: animal.get_meses > 12 and animal.get_meses <= 24, animais_femeas)))
+    categoria['femea_36'] = len(list(filter(lambda animal: animal.get_meses > 24 and animal.get_meses <= 36, animais_femeas)))
+    categoria['femea_37'] = len(list(filter(lambda animal: animal.get_meses > 36, animais_femeas)))
+    
+    categoria['macho_r']  = len(list(filter(lambda animal: animal.get_meses == 0, animais_machos)))
+    categoria['macho_1']  = len(list(filter(lambda animal: animal.get_meses == 1, animais_machos)))
+    categoria['macho_2']  = len(list(filter(lambda animal: animal.get_meses == 2, animais_machos)))
+    categoria['macho_3']  = len(list(filter(lambda animal: animal.get_meses == 3, animais_machos)))
+    categoria['macho_4']  = len(list(filter(lambda animal: animal.get_meses == 4, animais_machos)))
+    categoria['macho_5']  = len(list(filter(lambda animal: animal.get_meses == 5, animais_machos)))
+    categoria['macho_6']  = len(list(filter(lambda animal: animal.get_meses == 6, animais_machos)))
+    categoria['macho_7']  = len(list(filter(lambda animal: animal.get_meses == 7, animais_machos)))
+    categoria['macho_8']  = len(list(filter(lambda animal: animal.get_meses == 8, animais_machos)))
+    categoria['macho_9']  = len(list(filter(lambda animal: animal.get_meses == 9, animais_machos)))
+    categoria['macho_10'] = len(list(filter(lambda animal: animal.get_meses == 10, animais_machos)))
+    categoria['macho_11'] = len(list(filter(lambda animal: animal.get_meses == 11, animais_machos)))
+    categoria['macho_12'] = len(list(filter(lambda animal: animal.get_meses == 12, animais_machos)))
+    categoria['macho_24'] = len(list(filter(lambda animal: animal.get_meses > 12 and animal.get_meses <= 24, animais_machos)))
+    categoria['macho_36'] = len(list(filter(lambda animal: animal.get_meses > 24 and animal.get_meses <= 36, animais_machos)))
+    categoria['macho_37'] = len(list(filter(lambda animal: animal.get_meses > 36, animais_machos)))
+
+    return categoria

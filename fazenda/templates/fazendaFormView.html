@@ -1,0 +1,63 @@
+{% extends "base-sidenav.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+Fazenda
+{% endblock title %}
+    
+{% block head %}
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.min.css" />
+{% endblock head %}
+        
+   
+{% block content %}
+            
+<main>
+    <div class="container-fluid px-4">
+        <h1 class="my-4">Fazenda</h1>
+        
+
+        <div class="row g-3">
+          <form method="POST">
+            {% csrf_token %}
+            {{form|crispy}}
+            <input type="submit" class="btn btn-primary mt-4" value="Salvar">
+          </form>
+        </div>
+
+        {% comment %} <form class="row g-3" method="POST">
+            {% csrf_token %}
+            <div class="col-md-6">
+              <label for="inputNome" class="form-label">Nome</label>
+              <input type="text" class="form-control" id="inputNome" name="nome" value="{{fazenda.nome}}">
+            </div>
+            <div class="col-md-6">
+              <label for="inputinscricao" class="form-label">Inscrição Estdual</label>
+              <input type="text" class="form-control" id="inputinscricao" name="inscricao" value="{{fazenda.inscricao_estadual}}">
+            </div>
+            <div class="col-12">
+              <label for="inputProprietario" class="form-label">Proprietario</label>
+              <input type="text" class="form-control" id="inputProprietario" name="proprietario" value="{{fazenda.proprietario}}">
+            </div>
+            <div class="col-12">
+              <label for="inputEndereco" class="form-label">Endereço</label>
+              <input type="text" class="form-control" id="inputEndereco" name="endereco" value="{{fazenda.endereco}}">
+            </div>
+            
+          
+            <div class="col-12">
+              <input type="submit" class="btn btn-primary" value="Salvar">
+            </div>
+          </form> {% endcomment %}
+        
+        
+    </div>
+</main>
+{% endblock content %}
+
+
+    
+
+
+               

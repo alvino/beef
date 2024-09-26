@@ -1,0 +1,111 @@
+{% extends "base-sidenav.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load l10n %}
+{% load financeiro_extra %}
+
+{% block title %}
+Financeiro
+{% endblock title %}
+    
+{% block head %}
+
+   {% include 'partials/css/link_datatable_buttons.html' %}
+
+{% endblock head %}
+        
+   
+{% block content %}
+            
+<main>
+    <div class="container-fluid px-4">
+        <h1 class="my-4">Financeiro</h1>
+        
+        <div class="row mb-4">
+            <div class="col-4">
+                <a class="btn btn-primary" href="{% url 'financeiroCreate' %}" >Adicionar</a>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            {% if financeiros %}
+            <table id="DataTable" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Descricao</th>
+                        <th>Caixa</th>
+                        <th>Categoria</th>
+                        <th>Data</th>
+                        <th>Valor</th>
+                        <th class='d-print-none'>#</th>
+                        {% comment %} <th>Opção</th> {% endcomment %}
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th scope="col">Descricao</th>
+                        <th>Caixa</th>
+                        <th>Categoria</th>
+                        <th>Data</th>
+                        <th>Valor</th>
+                        <th class='d-print-none'>#</th>
+                        {% comment %} <th>Opção</th> {% endcomment %}
+                    </tr>
+                </tfoot>
+                <tbody>
+                    {% for financeiro in financeiros %}
+                    <tr class="pointer {% if financeiro.caixa == 'E'%} table-primary {% else %} table-danger {% endif %}" >
+                        <td scope="row">{{financeiro.descricao}}</td>
+                        <td>{{financeiro.caixa}}</td>
+                        <td>{{financeiro.categoria}}</td>
+                        <td>{{financeiro.data| date:'d/m/Y' }}</td>
+                        {% comment %} <td>{{financeiro.valor|localize}}</td> {% endcomment %}
+                        <td>{{financeiro.valor|locale_current}}</td>
+
+                        <td>
+                            <button type="button" class="btn btn-outline-secondary d-print-none" onclick="window.location='{% url 'financeiroUpdate' financeiro.id %}';">Selecinar</button>
+                        </td>
+                        {% comment %} <td>
+                            <a class="btn btn-danger" href="{% url 'financeiroDelete' financeiro.id %}">Deletar</a>
+                            <a class="btn btn-warning mx-4" href="{% url 'financeiroUpdate' financeiro.id %}" ><i class="fa-solid fa-pen"></i></a>
+                        </td> {% endcomment %}
+                    </tr>
+                    {% endfor %}
+                    
+                </tbody>
+            </table>
+            {% else %}
+            <div class="alert alert-info my-4" role="alert">
+                Não tem dados na tabela.
+            </div>
+            {% endif %}
+                
+               
+        </div>
+    </div>
+</main>
+{% endblock content %}
+
+
+{% block script %} 
+{% include "partials/js/script_datatable_buttons.html" %}
+
+<script>
+    new DataTable('#DataTable', {
+        
+        responsive: true,
+        layout: {
+            topStart: {
+                buttons: ['pageLength','print', 'excel','csvHtml5']
+             
+            }
+        }
+       
+    });
+</script>
+    
+{% endblock script %}   
+    
+
+
+               

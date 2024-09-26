@@ -1,0 +1,61 @@
+{% extends "base-sidenav.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+Movimentação Lote
+{% endblock title %}
+    
+
+{% block content %}
+            
+<main>
+    <div class="container-fluid px-4">
+        <div class="row my-4">
+          <h1>
+            Movimentação Lote
+          </h1>
+          
+            <a href="javascript:history.back()" >
+              <i class="fa-solid fa-arrow-left"></i> Voltar
+            </a>
+          
+        </div>
+
+        <div class="row g-3">
+          <form method="POST">
+            {% csrf_token %}
+            
+            <div id="div_id_animais" class="mb-3"> 
+              <fieldset> 
+                <legend class="form-label requiredField">
+                    {{lote.nome}}<span class="asteriskField">*</span> 
+                </legend> 
+                <div class="form-check"> 
+                    <div class="d-flex align-content-start flex-wrap""> 
+                      {% for animal in form.animais %}
+                        <div class="m-1 col-1">
+                          {{animal}}
+                        </div>
+                      {% endfor %}
+                    </div> 
+                </div> 
+              </fieldset> 
+            </div>
+              
+           
+         
+            <input type="submit" class="btn btn-primary my-4" value="Salvar">
+            
+          </form>
+        </div>
+
+    </div>
+</main>
+{% endblock content %}
+
+
+    
+
+
+               

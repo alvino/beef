@@ -1,0 +1,123 @@
+{% extends "base-sidenav.html" %}
+{% load static %}
+
+{% block title %}
+Pesagem
+{% endblock title %}
+    
+{% block head %}
+    {% include 'partials/css/link_datatable_buttons.html' %}
+{% endblock head %}
+        
+   
+{% block content %}
+            
+<main>
+    <div class="container-fluid px-4">
+        <h1 class="my-4">Pesagem</h1>
+       
+
+        <div class="row mb-4">
+            <div class="col-4">
+                <a class="btn btn-primary" href="{% url 'pesagemCreate' %}" >Adicionar Peso</a>
+            </div>  
+        </div>
+        
+        <div class="row">
+            
+            
+                {% if pesagens %}
+                <table id="datatable" class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Identificação</th>
+                            <th>Peso</th>
+                            <th>Data</th>
+                            
+                            <th >#</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th scope="col">Identificação</th>
+                            <th>Peso</th>
+                            <th>Data</th>
+                            
+                            <th>#</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        {% for pesagem in pesagens %}
+                        <tr>
+                            <td scope="row">{% firstof pesagem.animal.brinco pesagem.animal.nome %}</td>
+                            <td>{{pesagem.peso}}</td>
+                            <td>{{pesagem.data|date:'d/m/Y'}}</td>
+                            
+                            <td >
+                                <a class="btn btn-outline-secondary" href="{% url 'pesagemUpdate' pesagem.id %}">Selecinar</a>
+                                <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal{{pesagem.id}}">Deletar</button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal{{pesagem.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Confirmar Remoção</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                    Confirmar exclução do pesagem <small class="text-muted h6">{{pesagem.animal.brinco}} {{pesagem.peso}} </small>?
+                                    </div>
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <a type="button" class="btn btn-danger" href="{% url 'mortoDelete' pesagem.id %}">Deletar</a>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                            </td>
+                            {% comment %} <td>
+                                <a class="btn btn-warning mx-4" href="{% url 'loteUpdate' lote.id %}" ><i class="fa-solid fa-pen"></i></a>
+                                <a class="btn btn-danger" href="{% url 'loteDelete' lote.id %}"><i class="fa-solid fa-trash"></i></a>
+                            </td> {% endcomment %}
+                        </tr>
+                        {% endfor %}
+                       
+                    </tbody>
+                </table>
+                {% else %}
+                        <div class="alert alert-info my-4" role="alert">
+                            Não tem dados na tabela.
+                        </div>
+                {% endif %}
+            
+        </div>
+    </div>
+</main>
+{% endblock content %}
+
+
+{% block script %} 
+
+{% include 'partials/js/script_datatable_buttons.html' %}
+
+
+<script>
+    new DataTable('#datatable', {
+        
+        responsive: true,
+        layout: {
+            topStart: {
+                buttons: ['pageLength','print', 'excel','csvHtml5']
+             
+            }
+        }
+       
+    });
+</script>
+    
+{% endblock script %}   
+    
+
+
+               

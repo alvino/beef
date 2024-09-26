@@ -1,0 +1,8 @@
+.venv
+db.sqlite3
+animal/fixture
+financeiro/fixture
+lote/fixture
+movimentacaoLote/fixture
+pasto/fixture/pasto.json
+**/__pycache__

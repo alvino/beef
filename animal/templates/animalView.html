@@ -1,0 +1,260 @@
+{% extends "base-sidenav.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+Animal
+{% endblock title %}
+    
+{% block head %}
+
+   {% include 'partials/css/link_datatable_buttons.html' %}
+
+{% endblock head %}
+        
+   
+{% block content %}
+            
+<main>
+    <div class="container-fluid px-4">
+        <h1 class="my-4">Animal</h1>
+        
+
+       
+
+        <div class="row mb-4">
+            <div class="col-4">
+                <a class="btn btn-primary" href="{% url 'animalCreate' %}" >Adicionar Animal</a>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="produtivo-tab" data-bs-toggle="tab" data-bs-target="#produtivo" type="button" role="tab" aria-controls="produtivo" aria-selected="true">Produtivo</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                <button class="nav-link" id="vendido-tab" data-bs-toggle="tab" data-bs-target="#vendido" type="button" role="tab" aria-controls="vendido" aria-selected="false">Vendido</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="morto-tab" data-bs-toggle="tab" data-bs-target="#morto" type="button" role="tab" aria-controls="morto" aria-selected="false">Morto</button>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="produtivo" role="tabpanel" aria-labelledby="produtivo-tab">
+                    {% if produtivos %}
+                        <table id="produtivosDataTable" class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Brinco</th>
+                                    <th>Nome</th>
+                                    <th>Sexo</th>
+                                    <th>Nascimento</th>
+                                    <th>Meses</th>
+                                    <th>Mãe</th>
+                                    <th>Pai</th>
+                                    <th>lote</th>
+                                    <th>#</th>
+                                    {% comment %} <th>Opção</th> {% endcomment %}
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th scope="col">Brinco</th>
+                                    <th>Nome</th>
+                                    <th>Sexo</th>
+                                    <th>Nascimento</th>
+                                    <th>Meses</th>
+                                    <th>Mãe</th>
+                                    <th>Pai</th>
+                                    <th>lote</th>
+                                    <th >#</th>
+                                    {% comment %} <th>Opção</th> {% endcomment %}
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                {% for animal in produtivos %}
+                                <tr class="pointer" >
+                                    <td scope="row">{{animal.brinco}}</td>
+                                    <td>{{animal.nome}}</td>
+                                    <td>{{animal.sexo}}</td>
+                                    <td>{{animal.data_nascimento| date:'d/m/Y' }}</td>
+                                    <td>{{animal.get_meses}}</td>
+                                    <td>{{animal.mae}}</td>
+                                    <td>{{animal.pai}}</td>
+                                    <td>{{animal.lote| default_if_none:""}}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-outline-secondary" onclick="window.location='{% url 'animalUpdate' animal.id %}';">Selecinar</button>
+                                    </td>
+                                    {% comment %} <td>
+                                        <a class="btn btn-warning mx-4" href="{% url 'animalUpdate' animal.id %}" ><i class="fa-solid fa-pen"></i></a>
+                                        <a class="btn btn-danger" href="{% url 'animalDelete' animal.id %}"><i class="fa-solid fa-trash"></i></a>
+                                    </td> {% endcomment %}
+                                </tr>
+                                {% endfor %}
+                                
+                            </tbody>
+                        </table>
+                        {% else %}
+                        <div class="alert alert-info my-4" role="alert">
+                            Não tem dados na tabela.
+                        </div>
+                        {% endif %}
+                </div>
+                <div class="tab-pane fade active" id="vendido" role="tabpanel" aria-labelledby="vendido-tab">
+                   
+                    {% if vendidos %}
+                        <table id="vendidosDataTable" class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Brinco</th>
+                                    <th>Nome</th>
+                                    <th>Sexo</th>
+                                    <th>Vendido</th>
+                                    <th>Mãe</th>
+                                    <th>Pai</th>
+                                    <th>#</th>
+                                    {% comment %} <th>Opção</th> {% endcomment %}
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th scope="col">Brinco</th>
+                                    <th>Nome</th>
+                                    <th>Sexo</th>
+                                    <th>Vendido</th>
+                                    <th>Mãe</th>
+                                    <th>Pai</th>
+                                    <th >#</th>
+                                    {% comment %} <th>Opção</th> {% endcomment %}
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                {% for animal in vendidos %}
+                                <tr class="pointer" >
+                                    <td scope="row">{{animal.brinco}}</td>
+                                    <td>{{animal.nome}}</td>
+                                    <td>{{animal.sexo}}</td>
+                                    <td>{{animal.data_change_status| date:'d/m/Y' }}</td>
+                                    <td>{{animal.mae}}</td>
+                                    <td>{{animal.lote_set.first}}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-outline-secondary" onclick="window.location='{% url 'animalUpdate' animal.id %}';">Selecinar</button>
+                                    </td>
+                                    {% comment %} <td>
+                                        <a class="btn btn-warning mx-4" href="{% url 'animalUpdate' animal.id %}" ><i class="fa-solid fa-pen"></i></a>
+                                        <a class="btn btn-danger" href="{% url 'animalDelete' animal.id %}"><i class="fa-solid fa-trash"></i></a>
+                                    </td> {% endcomment %}
+                                </tr>
+                                {% endfor %}
+                                
+                            </tbody>
+                        </table>
+                        {% else %}
+                        <div class="alert alert-info my-4" role="alert">
+                            Não tem dados na tabela.
+                        </div>
+                        {% endif %}
+                </div>
+                <div class="tab-pane fade  active" id="morto" role="tabpanel" aria-labelledby="morto-tab">
+                    {% if mortos %}
+                        <table id="mortosDataTable" class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Brinco</th>
+                                    <th>Nome</th>
+                                    <th>Sexo</th>
+                                    <th>Morte</th>
+                                    <th>Mãe</th>
+                                    <th>Pai</th>
+                                    <th>#</th>
+                                    {% comment %} <th>Opção</th> {% endcomment %}
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th scope="col">Brinco</th>
+                                    <th>Nome</th>
+                                    <th>Sexo</th>
+                                    <th>Morte</th>
+                                    <th>Mãe</th>
+                                    <th>Pai</th>
+                                    <th >#</th>
+                                    {% comment %} <th>Opção</th> {% endcomment %}
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                {% for animal in mortos %}
+                                <tr class="pointer" >
+                                    <td scope="row">{{animal.brinco}}</td>
+                                    <td>{{animal.nome}}</td>
+                                    <td>{{animal.sexo}}</td>
+                                    <td>{{animal.data_change_status| date:'d/m/Y' }}</td>
+                                    <td>{{animal.mae}}</td>
+                                    <td>{{animal.lote_set.first}}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-outline-secondary" onclick="window.location='{% url 'animalUpdate' animal.id %}';">Selecinar</button>
+                                    </td>
+                                    {% comment %} <td>
+                                        <a class="btn btn-warning mx-4" href="{% url 'animalUpdate' animal.id %}" ><i class="fa-solid fa-pen"></i></a>
+                                        <a class="btn btn-danger" href="{% url 'animalDelete' animal.id %}"><i class="fa-solid fa-trash"></i></a>
+                                    </td> {% endcomment %}
+                                </tr>
+                                {% endfor %}
+                                
+                            </tbody>
+                        </table>
+                        {% else %}
+                        <div class="alert alert-info my-4" role="alert">
+                            Não tem dados na tabela.
+                        </div>
+                        {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock content %}
+
+
+{% block script %} 
+{% include "partials/js/script_datatable_buttons.html" %}
+
+<script>
+    new DataTable('#produtivosDataTable', {
+        
+        responsive: true,
+        layout: {
+            topStart: {
+                buttons: ['pageLength','print', 'excel','csvHtml5']
+             
+            }
+        }
+       
+    });
+    new DataTable('#vendidosDataTable', {
+        responsive: true,
+        layout: {
+            topStart: {
+                buttons: ['pageLength','print', 'excel','csvHtml5']
+             
+            }
+        }
+    });
+    new DataTable('#mortosDataTable', {
+        
+        responsive: true,
+        layout: {
+            topStart: {
+                buttons: ['pageLength','print', 'excel','csvHtml5']
+             
+            }
+        }
+    });
+</script>
+    
+{% endblock script %}   
+    
+
+
+               

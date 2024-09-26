@@ -1,0 +1,117 @@
+{% extends "base-sidenav.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+Procedimento
+{% endblock title %}
+    
+{% block head %}
+
+   {% include 'partials/css/link_datatable_buttons.html' %}
+
+{% endblock head %}
+        
+   
+{% block content %}
+            
+<main>
+    <div class="container-fluid px-4">
+        <h1 class="my-4">Procedimento</h1>
+        
+        <div class="row mb-4">
+            <div class="col-4">
+                <a class="btn btn-primary" href="{% url 'procedimentoCreate' %}" >Adicionar Procedimento</a>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            
+            {% if procedimentos %}
+            <table id="DataTable" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Procedimento</th>
+                        <th>data</th>
+                        <th>detalhe</th>
+                        <th>animais</th>
+                        <th>#</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th scope="col">Procedimento</th>
+                        <th>data</th>
+                        <th>detalhe</th>
+                        <th>animais</th>
+                        <th>#</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    {% for procedimento in procedimentos %}
+                    <tr class="pointer" >
+                        <td scope="row">{{procedimento.procedimento}}</td>
+                        <td>{{procedimento.data| date:'d/m/Y' }}</td>
+                        <td>{{procedimento.detalhe}}</td>
+                        <td>{{procedimento.animais.all|length}}</td>
+                        <td>
+                            <button type="button" class="btn btn-outline-secondary" onclick="window.location='{% url 'procedimentoUpdate' procedimento.id %}';">Selecinar</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    
+                </tbody>
+            </table>
+            {% else %}
+            <div class="alert alert-info my-4" role="alert">
+                Não tem dados na tabela.
+            </div>
+            {% endif %}
+              
+        </div>
+    </div>
+</main>
+{% endblock content %}
+
+
+{% block script %} 
+{% include "partials/js/script_datatable_buttons.html" %}
+
+<script>
+    new DataTable('#produtivosDataTable', {
+        
+        responsive: true,
+        layout: {
+            topStart: {
+                buttons: ['pageLength','print', 'excel','csvHtml5']
+             
+            }
+        }
+       
+    });
+    new DataTable('#vendidosDataTable', {
+        responsive: true,
+        layout: {
+            topStart: {
+                buttons: ['pageLength','print', 'excel','csvHtml5']
+             
+            }
+        }
+    });
+    new DataTable('#mortosDataTable', {
+        
+        responsive: true,
+        layout: {
+            topStart: {
+                buttons: ['pageLength','print', 'excel','csvHtml5']
+             
+            }
+        }
+    });
+</script>
+    
+{% endblock script %}   
+    
+
+
+               

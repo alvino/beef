@@ -1,0 +1,54 @@
+{% extends "base-sidenav.html" %}
+
+
+{% block title %}
+Opções
+{% endblock title %}
+    
+   
+{% block content %}
+<main>
+    <div class="container-fluid my-4">
+
+        <div class="d-flex flex-wrap justify-content-around ">
+            <div class="list-group list-group-horizontal my-2">
+                <a class="list-group-item list-group-item-action list-group-item-success" href="{% url 'animal' %}">
+                    Animais
+                </a> 
+                <a class="list-group-item list-group-item-action list-group-item-success" href="{% url 'lote' %}">
+                    Lotes
+                </a>
+                <a class="list-group-item list-group-item-action list-group-item-success" href="{% url 'pasto' %}">
+                    Pastos
+                </a>
+            </div>
+
+            <div class="list-group list-group-horizontal my-2">
+                <a class="list-group-item list-group-item-action list-group-item-primary" href="{% url 'movimentacao' %}">
+                    Movimentação Pasto
+                </a> 
+                <a class="list-group-item list-group-item-action list-group-item-primary" href="{% url 'movimentacaoLote' %}">
+                    Movimentação Lote
+                </a>
+                <a class="list-group-item list-group-item-action list-group-item-primary" href="{% url 'pesagem' %}">
+                    Pesagem
+                </a> 
+                <a class="list-group-item list-group-item-action list-group-item-primary" href="{% url 'procedimento' %}">
+                    Procedimento
+                </a> 
+            </div>
+            <div class="list-group list-group-horizontal my-2">
+                <a class="list-group-item list-group-item-action list-group-item-danger" href="{% url 'vendido' %}">
+                    Vendido
+                </a>
+                <a class="list-group-item list-group-item-action list-group-item-danger" href="{% url 'morto' %}">
+                    Morreu
+                </a>
+            </div>
+        </div>
+        
+
+    </div>
+</main>
+{% endblock content %}
+               

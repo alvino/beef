@@ -1,0 +1,65 @@
+{% load static %}
+
+<nav class="navbar navbar-expand navbar-dark bg-dark d-print-none">
+    <!-- Navbar Brand-->
+    <a class="navbar-brand ps-3" href="{% url 'home' %}">MBeef</a>
+    <!-- Sidebar Toggle-->
+    {% comment %} 
+    <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button> 
+    {% endcomment %}
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="{% url 'home' %}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
+        </li>
+        
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#"  role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Manejo
+          </a>
+          <ul class="dropdown-menu">
+            <li ><a class="dropdown-item" href="{% url 'movimentacao' %}">Movimentação Pasto</a></li>
+            <li ><a class="dropdown-item" href="{% url 'movimentacaoLote' %}">Movimentação Lote</a></li>
+            <li ><a class="dropdown-item" href="{% url 'pesagem' %}">Pesagem</a></li> 
+            <li ><a class="dropdown-item" href="{% url 'procedimento' %}">Procedimento</a></li> 
+            <li ><hr class="dropdown-divider"></li>
+            <li ><a class="dropdown-item" href="{% url 'morto' %}">Morreu</a></li>
+            <li ><a class="dropdown-item" href="{% url 'vendido' %}">Vendido</a></li>
+
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Cadastro
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li ><a class="dropdown-item" href="{% url 'animal' %}">Animais</a></li> 
+            <li ><a class="dropdown-item" href="{% url 'lote' %}">Lotes</a></li>
+            <li ><a class="dropdown-item" href="{% url 'pasto' %}">Pastos</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'financeiro' %}">Financeiro</a>
+        </li>
+      </ul>
+    <!-- Navbar select fazenda-->
+    <form 
+    class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+    </form> 
+    
+    <!-- Navbar-->
+    <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4 ">
+        <li class="nav-item dropdown">
+            <button class="btn btn-dark dropdown-toggle" id="navbarUserDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-user fa-fw"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarUserDropdown">
+                <li><a class="dropdown-item" href="{% url 'fazenda' %}">Fazenda</a></li>
+                
+                <li><a class="dropdown-item" href="{% url 'logout' %}">Sair</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
